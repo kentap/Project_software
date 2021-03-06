@@ -1,7 +1,7 @@
 import pandas as pd
 from apiclient.discovery import build
 
-api_key = 'AIzaSyBbIEbIQr3ObkLMFh7JLg0Zo21TcdnmHzs'
+api_key = '*************************'
 youtube = build('youtube', 'v3', developerKey= api_key)
 
 # partにはidとsnippetを指定
