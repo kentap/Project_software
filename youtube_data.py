@@ -1,38 +1,50 @@
 import pandas as pd
 from apiclient.discovery import build
+import csv
 
-api_key = '*************************'
-youtube = build('youtube', 'v3', developerKey= api_key)
-
-# partにはidとsnippetを指定
-# q=検索クエリ
-# order=並び替え方法
-# type=検索クエリの制限対象
-
-def get_data(part='snippet',q='python programming',order='viewCount',type='video',num=20):
-    data_list = []
-    search_response = youtube.search().list(part=part,q=q,order=order,type=type)
-    output = youtube.search().list(part=part, q=q, order=order, type=type).execute()
-
-    for i in range(num):
-        data_list += output['items']
-        search_response = youtube.search().list_next(search_response,output)
-        output = search_response.execute()
-
-    dataF = pd.DataFrame(data_list)
-    # 各動画毎に一意のvideoIdを取得
-    df1 = pd.DataFrame(list(dataF['id']))['videoId']
-    # 各動画毎に一意のvideoIdを取得必要な動画情報だけ取得
-    df2 = pd.DataFrame(list(dataF['snippet']))[['channelTitle', 'publishedAt', 'title']]
-    ddf = pd.concat([df1, df2], axis=1)
-
-    ddf.to_csv('youtube_test.csv')
+api_key = 'AIzaSyB8y97s9ppxsMhDwPdRI_TZzSBp262D-oU'
+api_service_name = 'youtube'
+api_version = 'v3'
+youtube = build(api_service_name, api_version, developerKey=api_key)
 
 
+def get_videos_data():
+    # itemsを格納する用のリスト
+    result_list = []
+    # 検索キーワード。ANDは「/」「,」 NOTは「-」 ORは「|」
+    search_word = input('検索ワードを入力してください:')
+    # nums * 5個の動画情報を取得する
+    nums = int(input('何回繰り返しますか？'))
 
-# print(len(search_response['items']))
-# print(search_response['items'])
+    # partには動画情報を含むsnippetを指定
+    # order=並び替え方法
+    # type=対象を選択（channel,playlist,videoのいずれか）
+    response = youtube.search().list(q=search_word, part='snippet', type='video', order='viewCount')
+    # APIを実行
+    get_response = response.execute()
+
+    # nums * 5個の情報を取得する
+    for i in range(nums):
+        result_list = result_list + get_response['items']  # itemsをリストに入れ、そのリストと実行で得た情報を後ろに追加していく
+        response = youtube.search().list_next(response, get_response)  # list_nextメソッドで次の検索へ進む(次の5つの情報を取得する)
+        get_response = response.execute()  # API実行
+
+    data = pd.DataFrame(result_list)
+    data2 = pd.DataFrame(list(data['id']))['videoId']
+    data3 = pd.DataFrame(list(data['snippet']))[['channelTitle', 'publishedAt', 'channelId', 'title']]
+
+    # 関数引き渡しのため
+    global final_data
+    final_data = pd.concat([data2, data3], axis=1)  # 横方向に連結
+
+    return final_data
+
+get_videos_data()
 
 
+# csvファイルへの出力
+def create_csv():
+    file_path = input('csvファイルのパスを入力してください。:')
+    final_data.to_csv(file_path, sep=',', index=False, encoding='utf-8')
 
-
+create_csv()
