@@ -1,3 +1,6 @@
+# 検索ワードに関連する動画情報をCSVファイルで出力する
+
+
 import pandas as pd
 from apiclient.discovery import build
 import csv
@@ -25,7 +28,7 @@ def get_videos_data():
 
     # nums * 5個の情報を取得する
     for i in range(nums):
-        result_list = result_list + get_response['items']  # itemsをリストに入れ、そのリストと実行で得た情報を後ろに追加していく
+        result_list = result_list + get_response['items']  # 1つ前のリクエストとレスポンスを引数に渡すことで、次のデータを取得することができる。
         response = youtube.search().list_next(response, get_response)  # list_nextメソッドで次の検索へ進む(次の5つの情報を取得する)
         get_response = response.execute()  # API実行
 
