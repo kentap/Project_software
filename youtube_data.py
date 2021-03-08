@@ -4,7 +4,7 @@
 import pandas as pd
 from apiclient.discovery import build
 
-api_key = 'AIzaSyB8y97s9ppxsMhDwPdRI_TZzSBp262D-oU'
+api_key = '' #ここに取得したAPI keyを入れる 
 api_service_name = 'youtube'
 api_version = 'v3'
 youtube = build(api_service_name, api_version, developerKey=api_key)
