@@ -36,7 +36,7 @@ def get_videos_data():
     data2 = pd.DataFrame(list(data['id']))['videoId']
     data3 = pd.DataFrame(list(data['snippet']))[['channelTitle', 'publishedAt', 'channelId', 'title']]
 
-    # 関数引き渡しのため
+    # 関数create_csvへ引き渡しのため
     global final_data
     final_data = pd.concat([data2, data3], axis=1)  # 横方向に連結
 
