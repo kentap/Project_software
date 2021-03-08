@@ -3,7 +3,6 @@
 
 import pandas as pd
 from apiclient.discovery import build
-import csv
 
 api_key = 'AIzaSyB8y97s9ppxsMhDwPdRI_TZzSBp262D-oU'
 api_service_name = 'youtube'
