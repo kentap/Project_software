@@ -12,19 +12,16 @@ youtube = build(api_service_name, api_version, developerKey=api_key)
 
 
 def get_videos_data():
-    # itemsを格納する用のリスト
-    result_list = []
-    # 検索キーワード。ANDは「/」「,」 NOTは「-」 ORは「|」
-    search_word = input('検索ワードを入力してください:')
-    # nums * 5個の動画情報を取得する
-    nums = int(input('何回繰り返しますか？'))
-
+    result_list = []　# itemsを格納する用のリスト
+    search_word = input('検索ワードを入力してください:')  # 検索キーワード。ANDは「/」「,」 NOTは「-」 ORは「|」
+    nums = int(input('何回繰り返しますか？'))  # nums * 5個の動画情報を取得する
+ 
+    
     # partには動画情報を含むsnippetを指定
     # order=並び替え方法
     # type=対象を選択（channel,playlist,videoのいずれか）
     response = youtube.search().list(q=search_word, part='snippet', type='video', order='viewCount')
-    # APIを実行
-    get_response = response.execute()
+    get_response = response.execute() # APIを実行
 
     # nums * 5個の情報を取得する
     for i in range(nums):
