@@ -45,5 +45,6 @@ get_videos_data()
 def create_csv():
     file_path = input('csvファイルのパスを入力してください。:')
     final_data.to_csv(file_path, sep=',', index=False, encoding='utf-8')
+    print('出力しました。')
 
 create_csv()
