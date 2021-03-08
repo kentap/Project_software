@@ -19,14 +19,14 @@ def get_videos_data():
     # partには動画情報を含むsnippetを指定
     # order=並び替え方法
     # type=対象を選択（channel,playlist,videoのいずれか）
-    response = youtube.search().list(q=search_word, part='snippet', type='video', order='viewCount')
-    get_response = response.execute() # APIを実行
+    request = youtube.search().list(q=search_word, part='snippet', type='video', order='viewCount')
+    get_response = request.execute() # APIを実行
 
     # nums * 5個の情報を取得する
     for i in range(nums):
         result_list = result_list + get_response['items'] 　　　　　　　 # itemsをリストに入れ、そのリストと次の実行で得た情報を後ろに追加していく
-        response = youtube.search().list_next(response, get_response)   # 1つ前のリクエストとレスポンスを引数に渡すことで次のデータを取得する
-        get_response = response.execute()  # API実行
+        response = youtube.search().list_next(request, get_response)   # 1つ前のリクエストとレスポンスを引数に渡すことで次のデータを取得する
+        get_response = request.execute()  # API実行
 
     data = pd.DataFrame(result_list)
     data2 = pd.DataFrame(list(data['id']))['videoId']
