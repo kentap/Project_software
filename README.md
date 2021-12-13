@@ -1,9 +1,9 @@
 # Project_software
-<h3>ソフトウェア工学クラスのプロジェクト課題</h3>
-<p>Youtubeが提供するAPI（YouTube Data API v3）を使って動画情報を取得・分析する</p>
+<h3>This is my small project using Python.</h3>
+<p>Obtain and analyze video information using the API provided by Youtube (YouTube Data API v3).</p>
 https://developers.google.com/youtube/v3/docs　
 
-<p>1. youtube API keyを取得する</p>
-<p>2. キーワードとリクエストしたい回数を入力する</p>
-<p>3. 再生回数の多い順に動画の情報と統計情報を取得し、指定したCSVに出力</p>
+<p>1. Get the youtube API key.</p>
+<p>2. Enter keywords and the number of times you want to request.</p>
+<p>3.Get the video information and statistics in order of the number of times it has been played, and output to the specified CSV file.</p>
 
